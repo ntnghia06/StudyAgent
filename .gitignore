@@ -1,0 +1,12 @@
+# Bỏ qua thư mục môi trường ảo (nặng hàng trăm MB, không được up)
+.venv/
+venv/
+env/
+
+# Bỏ qua các file biên dịch rác của Python
+__pycache__/
+*.py[cod]
+
+# Bỏ qua file chứa API Key (BẢO MẬT TUYỆT ĐỐI)
+.env
+.DS_Store

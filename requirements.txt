@@ -1,0 +1,26 @@
+# --- AI & LLM Core ---
+langchain
+langchain-google-genai
+langchain-text-splitters
+langgraph
+google-generativeai
+sentence-transformers
+qdrant-client
+
+# --- Audio & Pytorch ---
+torch>=2.0.0
+torchaudio>=2.0.0
+openai-whisper
+faster-whisper
+pydub
+noisereduce
+
+# --- File Processing & Utils ---
+pymupdf
+python-docx
+fpdf2
+genanki
+python-dotenv
+pyaudioop
+
+static_ffmpeg
