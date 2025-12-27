@@ -7,7 +7,7 @@ def main():
     
     while True:
         # 1. Nhận đầu vào từ người dùng
-        user_input = r"https://www.youtube.com/watch?v=hSbRNW-mpfE"
+        user_input = r"D:\Study-Agent\data\VieXplor.pdf"
         query = input("\n👤 Bạn: ").strip()
         
         if user_input.lower() in ['exit', 'quit', 'thoát']:
@@ -38,7 +38,7 @@ def main():
         for output in app.stream(inputs):
             for node_name, state_update in output.items():
                 print(f"📍 Đã xong bước: [{node_name.upper()}]")
-                    
+                final_state = state_update
                 # Log nhẹ các thông tin quan trọng để debug
                 if "input_type" in state_update:
                     print(f"   📂 Loại đầu vào: {state_update['input_type']}")
@@ -47,11 +47,12 @@ def main():
             
         # 4. Lấy kết quả cuối cùng sau khi Graph kết thúc
         # Ta gọi invoke một lần nữa hoặc lấy state cuối từ stream
-        final_state = app.invoke(inputs)
+        #final_state = app.invoke(inputs)
             
         print("\n--- 🏁 KẾT QUẢ CUỐI CÙNG ---")
         print(final_state["answer"])
         print("-" * 30)
+        break
 
 
 if __name__ == "__main__":

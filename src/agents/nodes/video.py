@@ -3,6 +3,14 @@ import json
 import google.generativeai as genai
 from youtube_transcript_api import YouTubeTranscriptApi
 import yt_dlp
+import os
+import sys
+
+project_root = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+
+if project_root not in sys.path:
+    sys.path.append(project_root)
+
 from config import GEMINI_API_KEY
 
 def get_youtube_video_id(url):
@@ -65,10 +73,10 @@ def youtube_processor_node(state: dict):
             }
             """
         response = model.generate_content(
-            [f"NỘI DUNG VIDEO:\n{full_text}", prompt],
+            [system_instruction, f"NỘI DUNG VIDEO:\n{full_text}", prompt],
             generation_config={"response_mime_type": "application/json"}
         )
-        
+        print(response.text)
         # 4. Trả về Dictionary/List (KHÔNG dùng json.dumps)
         return {
             "answer": json.loads(response.text),
