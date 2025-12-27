@@ -2,6 +2,7 @@
 langchain
 langchain-google-genai
 langchain-text-splitters
+langchain_qdrant
 langgraph
 google-generativeai
 sentence-transformers
@@ -21,6 +22,9 @@ python-docx
 fpdf2
 genanki
 python-dotenv
-pyaudioop
 
-static_ffmpeg
+playwright
+youtube-transcript-api
+langchain-community
+pytube
+yt-dlp

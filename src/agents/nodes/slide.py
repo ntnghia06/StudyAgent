@@ -45,7 +45,7 @@ def process_slide(file_path: str, plan: dict):
         # Ép kiểu JSON cho Flashcard
         prompt = "Trả về danh sách JSON array: [{\"question\": \"...\", \"answer\": \"...\"}]"
         
-    elif output_format == "SUMMARY":
+    else:
         system_instruction = (
             "Bạn là trợ lý tóm tắt tài liệu. Hãy phân tích cấu trúc của slide và tạo bản tóm tắt theo từng chương hoặc mục lớn một cách logic."
         )

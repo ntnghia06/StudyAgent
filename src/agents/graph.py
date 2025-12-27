@@ -12,6 +12,8 @@ from src.agents.nodes.router import router_node
 from src.agents.nodes.slide import slide_processor_node
 from src.agents.nodes.rag import get_answer
 from src.agents.nodes.tools import anki_generator_node
+from src.agents.nodes.summarizer import generate_pdf_from_state
+from src.agents.nodes.video import youtube_processor_node
 # 1. Khởi tạo Graph với cấu trúc State
 
 workflow = StateGraph(AgentState)
@@ -21,6 +23,8 @@ workflow.add_node("router", router_node)
 workflow.add_node("process_slide", slide_processor_node)
 workflow.add_node("rag", get_answer)
 workflow.add_node("anki_generator", anki_generator_node)
+workflow.add_node("pdf", generate_pdf_from_state)
+workflow.add_node("video", youtube_processor_node)
 
 # 3. Thiết lập các Cạnh (Edges) và Điều kiện rẽ nhánh
 
@@ -34,6 +38,7 @@ workflow.add_conditional_edges(
     {
         "RAG": "rag",
         "SLIDE": "process_slide",
+        "VIDEO": "video"
     }
 )
 
@@ -43,12 +48,23 @@ workflow.add_conditional_edges(
     lambda x: x["user_intent"],
     {
         "FLASHCARD": "anki_generator",
+        "SUMMARY": "pdf"
+    }
+)
+
+workflow.add_conditional_edges(
+    "video",
+    lambda x: x["user_intent"],
+    {
+        "FLASHCARD": "anki_generator",
+        "SUMMARY": "pdf"
     }
 )
 
 # --- TẤT CẢ CÁC ĐƯỜNG ĐỀU DẪN VỀ KẾT THÚC ---
 workflow.add_edge("rag", END)
 workflow.add_edge("anki_generator", END)
+workflow.add_edge("pdf", END)
 
 # 4. Biên dịch Graph
 app = workflow.compile()

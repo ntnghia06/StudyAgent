@@ -7,7 +7,7 @@ def main():
     
     while True:
         # 1. Nhận đầu vào từ người dùng
-        user_input = r"D:\Study-Agent\data\VieXplor.pdf"
+        user_input = r"https://www.youtube.com/watch?v=hSbRNW-mpfE"
         query = input("\n👤 Bạn: ").strip()
         
         if user_input.lower() in ['exit', 'quit', 'thoát']:
