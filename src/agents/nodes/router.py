@@ -25,10 +25,11 @@ def router_node(state: dict):
     # 2. Lấy dữ liệu từ state
     user_input = state.get("input_data", "")
     query = state.get("query", "")
+    combined_input = f"FILE_PATH: {user_input}\nUSER_QUERY: {query}"
     # 3. Chạy Chain để lấy kết quả từ AI
     # Kết quả trả về sẽ tuân theo schema AnalysisPlan (input_type, user_intent...)
     try:
-        prediction = router_chain.invoke({"input_data": user_input, "user_query": query})
+        prediction = router_chain.invoke({"user_query": combined_input})
         print(f"prediction: {prediction}")
         # 4. Trả về bản cập nhật cho State
         return {

@@ -14,6 +14,8 @@ from src.agents.nodes.rag import get_answer
 from src.agents.nodes.tools import anki_generator_node
 from src.agents.nodes.summarizer import generate_pdf_from_state
 from src.agents.nodes.video import youtube_processor_node
+from src.agents.nodes.record import audio_processor_node
+from src.agents.nodes.qa import qa_node
 # 1. Khởi tạo Graph với cấu trúc State
 
 workflow = StateGraph(AgentState)
@@ -25,6 +27,8 @@ workflow.add_node("rag", get_answer)
 workflow.add_node("anki_generator", anki_generator_node)
 workflow.add_node("pdf", generate_pdf_from_state)
 workflow.add_node("video", youtube_processor_node)
+workflow.add_node("audio", audio_processor_node)
+workflow.add_node("qa", qa_node)
 
 # 3. Thiết lập các Cạnh (Edges) và Điều kiện rẽ nhánh
 
@@ -38,7 +42,8 @@ workflow.add_conditional_edges(
     {
         "RAG": "rag",
         "SLIDE": "process_slide",
-        "VIDEO": "video"
+        "VIDEO": "video",
+        "SPEECH": "audio"
     }
 )
 
@@ -48,7 +53,8 @@ workflow.add_conditional_edges(
     lambda x: x["user_intent"],
     {
         "FLASHCARD": "anki_generator",
-        "SUMMARY": "pdf"
+        "SUMMARY": "pdf",
+        "QA": "qa"
     }
 )
 
@@ -57,7 +63,18 @@ workflow.add_conditional_edges(
     lambda x: x["user_intent"],
     {
         "FLASHCARD": "anki_generator",
-        "SUMMARY": "pdf"
+        "SUMMARY": "pdf",
+        "QA": "qa"
+    }
+)
+
+workflow.add_conditional_edges(
+    "audio",
+    lambda x: x["user_intent"],
+    {
+        "FLASHCARD": "anki_generator",
+        "SUMMARY": "pdf",
+        "QA": "qa"
     }
 )
 
@@ -65,6 +82,7 @@ workflow.add_conditional_edges(
 workflow.add_edge("rag", END)
 workflow.add_edge("anki_generator", END)
 workflow.add_edge("pdf", END)
+workflow.add_edge("qa", END)
 
 # 4. Biên dịch Graph
 app = workflow.compile()
