@@ -36,5 +36,5 @@ soundfile
 noisereduce 
 
 static-ffmpeg
-
+streamlit
 
