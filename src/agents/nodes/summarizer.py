@@ -70,7 +70,7 @@ def generate_pdf_from_state(state: dict):
     )
 
     # --- BƯỚC 3: SỬ DỤNG PLAYWRIGHT (SYNC) ĐỂ XUẤT PDF ---
-    output_file = "Agent_Report.pdf"
+    output_file = "SUMMARY.pdf"
     
     try:
         print("Đang khởi tạo trình duyệt (Sync mode)...")
